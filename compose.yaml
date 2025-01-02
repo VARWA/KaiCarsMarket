@@ -1,0 +1,6 @@
+﻿services:
+  kaicarsmarket:
+    image: kaicarsmarket
+    build:
+      context: .
+      dockerfile: KaiCarsMarket/Dockerfile
