@@ -13,8 +13,10 @@ namespace KaiCarsMarket.Data
             : base(options)
         {
         }
+        
 
         public DbSet<KaiCarsMarket.Models.Users> Users { get; set; } = default!;
         public DbSet<KaiCarsMarket.Models.Cars> Cars { get; set; } = default!;
     }
+    
 }

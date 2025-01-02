@@ -3,8 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using KaiCarsMarket.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<UsersContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("UsersContext") ?? throw new InvalidOperationException("Connection string 'UsersContext' not found.")));
-
+    options.UseSqlite(builder.Configuration.GetConnectionString("UsersContext")));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
