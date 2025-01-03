@@ -22,6 +22,14 @@ namespace KaiCarsMarket.Controllers
         // GET: Cars
         public async Task<IActionResult> Index()
         {
+            if (!_context.Cars.Any())
+            {
+                var car1 = new Cars { Brand = "Toyota", Model = "Corolla", Year = 2020, Price = 20000, Description = "A reliable sedan.", Availability = true };
+                var car2 = new Cars { Brand = "Ford", Model = "Mustang", Year = 2021, Price = 30000, Description = "A sporty muscle car.", Availability = true };
+                _context.Cars.AddRange(car1, car2);
+                await _context.SaveChangesAsync();
+            }
+
             return View(await _context.Cars.ToListAsync());
         }
 

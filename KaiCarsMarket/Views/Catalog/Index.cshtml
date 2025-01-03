@@ -1,6 +1,85 @@
 ﻿@{
     ViewData["Title"] = "Каталог";
 }
-<h1>@ViewData["Title"]</h1>
 
+<h1>@ViewData["Title"]</h1>
 <p>Выбор автомобилей</p>
+
+<!-- Sort Dropdown -->
+<div class="mb-3">
+    <label for="sortOptions" class="form-label">Сортировать по:</label>
+    <select id="sortOptions" class="form-select" onchange="sortCars()">
+        <option value="price_asc">Цене (по возрастанию)</option>
+        <option value="price_desc">Цене (по убыванию)</option>
+        <option value="year_asc">Году (по возрастанию)</option>
+        <option value="year_desc">Году (по убыванию)</option>
+    </select>
+</div>
+
+<!-- Car List -->
+<div class="row" id="carCatalog">
+    @foreach (var car in Model)
+    {
+        <div class="col-12 col-sm-6 col-lg-4 mb-4">
+            <div class="card">
+                
+                <img src="@(string.IsNullOrEmpty(car.ImagePath) ? "/images/Image_not_available.png" : car.ImagePath)" 
+                     alt="@car.Brand @car.Model" class="img-fluid" />
+                <div class="card-body">
+                    <h5 class="card-title">@car.Brand @car.Model</h5>
+                    <p class="card-text">
+                        <strong>Год:</strong> @car.Year<br>
+                        <strong>Цена:</strong> @String.Format("{0:C}", car.Price)<br>
+                        <strong>Описание:</strong> @car.Description
+                    </p>
+                    <a href="@Url.Action("Details", "Cars", new { id = car.Id })" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- JavaScript for sorting -->
+@section Scripts {
+    <script>
+        function sortCars() {
+            const sortValue = document.getElementById("sortOptions").value;
+            let sortedCars;
+
+            // Get all cars in the catalog
+            let cars = Array.from(document.getElementById('carCatalog').getElementsByClassName('col-12'));
+
+            switch (sortValue) {
+                case 'price_asc':
+                    sortedCars = cars.sort((a, b) => {
+                        return parseFloat(a.querySelector('.card-text').children[1].innerText.replace(/[^\d.-]/g, '')) - 
+                               parseFloat(b.querySelector('.card-text').children[1].innerText.replace(/[^\d.-]/g, ''));
+                    });
+                    break;
+                case 'price_desc':
+                    sortedCars = cars.sort((a, b) => {
+                        return parseFloat(b.querySelector('.card-text').children[1].innerText.replace(/[^\d.-]/g, '')) - 
+                               parseFloat(a.querySelector('.card-text').children[1].innerText.replace(/[^\d.-]/g, ''));
+                    });
+                    break;
+                case 'year_asc':
+                    sortedCars = cars.sort((a, b) => {
+                        return parseInt(a.querySelector('.card-text').children[0].innerText.replace(/[^\d]/g, '')) - 
+                               parseInt(b.querySelector('.card-text').children[0].innerText.replace(/[^\d]/g, ''));
+                    });
+                    break;
+                case 'year_desc':
+                    sortedCars = cars.sort((a, b) => {
+                        return parseInt(b.querySelector('.card-text').children[0].innerText.replace(/[^\d]/g, '')) - 
+                               parseInt(a.querySelector('.card-text').children[0].innerText.replace(/[^\d]/g, ''));
+                    });
+                    break;
+            }
+
+            // Clear the existing catalog and append sorted cars
+            const carCatalog = document.getElementById('carCatalog');
+            carCatalog.innerHTML = '';
+            sortedCars.forEach(car => carCatalog.appendChild(car));
+        }
+    </script>
+}
