@@ -35,7 +35,7 @@
         <div class="col-12 col-sm-6 col-lg-4 mb-4 car-item" data-brand="@car.Brand" data-model="@car.Model" data-price="@car.Price" data-year="@car.Year">
             <div class="card">
                 <img src="@(string.IsNullOrEmpty(car.ImagePath) ? "/images/Image_not_available.png" : car.ImagePath)"
-                     alt="@car.Brand @car.Model" class="img-fluid" />
+                     alt="@car.Brand @car.Model" class="img-fluid" onerror="this.onerror=null; this.src='/images/Image_not_available.png';" />
                 <div class="card-body">
                     <h5 class="card-title">@car.Brand @car.Model</h5>
                     <p class="card-text">

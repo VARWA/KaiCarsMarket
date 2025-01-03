@@ -14,6 +14,12 @@
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        /*html, body {*/
+        /*    margin: 0;*/
+        /*    padding: 0;*/
+        /*    width: 100%;*/
+        /*    height: 100%;*/
+        /*}*/
         body {
             background-color: #f8f9fa;
             font-family: Arial, sans-serif;
@@ -22,24 +28,33 @@
 
         .hero {
             background: url('https://img3.akspic.ru/attachments/crops/0/5/4/9/2/129450/129450-fara-lichnyj_roskoshnyj_avtomobil-reshetka-svet-bmv_m5-1920x1080.jpg') no-repeat center center;
-            background-size: cover;
+            background-size: cover; /* изображение растягивается на весь экран */
+            background-position: center center; /* картинка центрируется */
+            width: 100%; /* ширина на всю страницу */
+            height: 100vh; /* высота, соответствующая размеру экрана */
             color: white;
-            padding: 100px 0;
-            animation: fadeIn 2s ease-out;
+            position: relative; /* необходимо для абсолютного позиционирования элементов внутри */
+            padding: 0;
+            margin: 0; /* убираем отступы */
         }
 
-        .hero h1, .hero p {
-            opacity: 0;
-            animation: fadeInUp 1s forwards;
+        body {
+            background-color: #f8f9fa;
+        }
+        /*.hero {*/
+        /*    background: url('https://example.com/your-image.jpg') no-repeat center center;*/
+        /*    background-size: cover;*/
+        /*    color: white;*/
+        /*    padding: 100px 0;*/
+        /*}*/
+        .advantages {
+            margin-top: 50px;
+        }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
         }
 
-        .hero h1 {
-            animation-delay: 0.5s;
-        }
-
-        .hero p {
-            animation-delay: 1s;
-        }
 
         .btn-light {
             opacity: 0;
