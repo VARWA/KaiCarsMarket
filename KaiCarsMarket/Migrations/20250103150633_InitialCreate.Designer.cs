@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KaiCarsMarket.Migrations
 {
     [DbContext(typeof(UsersContext))]
-    [Migration("20250102235655_InitialCreate")]
+    [Migration("20250103150633_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
