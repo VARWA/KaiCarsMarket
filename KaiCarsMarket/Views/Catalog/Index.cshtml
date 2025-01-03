@@ -5,6 +5,12 @@
 <h1>@ViewData["Title"]</h1>
 <p>Выбор автомобилей</p>
 
+<!-- Search Bar -->
+<div class="mb-3">
+    <label for="searchInput" class="form-label">Поиск:</label>
+    <input type="text" id="searchInput" class="form-control" oninput="filterCars()" placeholder="Введите бренд или модель..." />
+</div>
+
 <!-- Sort Dropdown -->
 <div class="mb-3">
     <label for="sortOptions" class="form-label">Сортировать по:</label>
@@ -16,14 +22,19 @@
     </select>
 </div>
 
+<!-- Placeholder for no results -->
+<div id="noResults" class="text-center" style="display: none;">
+    <img src="/images/no_results.png" alt="No Results" class="img-fluid mb-3" style="max-width: 300px;" />
+    <p class="text-muted">К сожалению, автомобили не найдены.</p>
+</div>
+
 <!-- Car List -->
 <div class="row" id="carCatalog">
     @foreach (var car in Model)
     {
-        <div class="col-12 col-sm-6 col-lg-4 mb-4">
+        <div class="col-12 col-sm-6 col-lg-4 mb-4 car-item" data-brand="@car.Brand" data-model="@car.Model" data-price="@car.Price" data-year="@car.Year">
             <div class="card">
-                
-                <img src="@(string.IsNullOrEmpty(car.ImagePath) ? "/images/Image_not_available.png" : car.ImagePath)" 
+                <img src="@(string.IsNullOrEmpty(car.ImagePath) ? "/images/Image_not_available.png" : car.ImagePath)"
                      alt="@car.Brand @car.Model" class="img-fluid" />
                 <div class="card-body">
                     <h5 class="card-title">@car.Brand @car.Model</h5>
@@ -37,49 +48,64 @@
             </div>
         </div>
     }
+    }
 </div>
 
-<!-- JavaScript for sorting -->
+<!-- JavaScript for sorting and searching -->
 @section Scripts {
     <script>
         function sortCars() {
             const sortValue = document.getElementById("sortOptions").value;
-            let sortedCars;
+            const carItems = Array.from(document.querySelectorAll('.car-item'));
 
-            // Get all cars in the catalog
-            let cars = Array.from(document.getElementById('carCatalog').getElementsByClassName('col-12'));
+            carItems.sort((a, b) => {
+                const priceA = parseFloat(a.getAttribute('data-price'));
+                const priceB = parseFloat(b.getAttribute('data-price'));
+                const yearA = parseInt(a.getAttribute('data-year'));
+                const yearB = parseInt(b.getAttribute('data-year'));
 
-            switch (sortValue) {
-                case 'price_asc':
-                    sortedCars = cars.sort((a, b) => {
-                        return parseFloat(a.querySelector('.card-text').children[1].innerText.replace(/[^\d.-]/g, '')) - 
-                               parseFloat(b.querySelector('.card-text').children[1].innerText.replace(/[^\d.-]/g, ''));
-                    });
-                    break;
-                case 'price_desc':
-                    sortedCars = cars.sort((a, b) => {
-                        return parseFloat(b.querySelector('.card-text').children[1].innerText.replace(/[^\d.-]/g, '')) - 
-                               parseFloat(a.querySelector('.card-text').children[1].innerText.replace(/[^\d.-]/g, ''));
-                    });
-                    break;
-                case 'year_asc':
-                    sortedCars = cars.sort((a, b) => {
-                        return parseInt(a.querySelector('.card-text').children[0].innerText.replace(/[^\d]/g, '')) - 
-                               parseInt(b.querySelector('.card-text').children[0].innerText.replace(/[^\d]/g, ''));
-                    });
-                    break;
-                case 'year_desc':
-                    sortedCars = cars.sort((a, b) => {
-                        return parseInt(b.querySelector('.card-text').children[0].innerText.replace(/[^\d]/g, '')) - 
-                               parseInt(a.querySelector('.card-text').children[0].innerText.replace(/[^\d]/g, ''));
-                    });
-                    break;
-            }
+                switch (sortValue) {
+                    case 'price_asc':
+                        return priceA - priceB;
+                    case 'price_desc':
+                        return priceB - priceA;
+                    case 'year_asc':
+                        return yearA - yearB;
+                    case 'year_desc':
+                        return yearB - yearA;
+                }
+            });
 
-            // Clear the existing catalog and append sorted cars
             const carCatalog = document.getElementById('carCatalog');
             carCatalog.innerHTML = '';
-            sortedCars.forEach(car => carCatalog.appendChild(car));
+            carItems.forEach(car => carCatalog.appendChild(car));
+
+            checkNoResults();
+        }
+
+        function filterCars() {
+            const query = document.getElementById("searchInput").value.toLowerCase();
+            const carItems = document.querySelectorAll('.car-item');
+            let visibleCount = 0;
+
+            carItems.forEach(car => {
+                const brand = car.getAttribute('data-brand').toLowerCase();
+                const model = car.getAttribute('data-model').toLowerCase();
+                const matches = brand.includes(query) || model.includes(query);
+
+                car.style.display = matches ? '' : 'none';
+                if (matches) visibleCount++;
+            });
+
+            checkNoResults(visibleCount);
+        }
+
+        function checkNoResults(visibleCount = null) {
+            const carCatalog = document.getElementById('carCatalog');
+            const noResults = document.getElementById('noResults');
+            const visibleCars = visibleCount !== null ? visibleCount : carCatalog.querySelectorAll('.car-item:not([style*="display: none"])').length;
+
+            noResults.style.display = visibleCars === 0 ? 'block' : 'none';
         }
     </script>
 }

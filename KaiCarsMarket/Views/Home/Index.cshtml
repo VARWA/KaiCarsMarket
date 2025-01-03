@@ -16,95 +16,192 @@
     <style>
         body {
             background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            transition: all 0.3s ease;
         }
+
         .hero {
             background: url('https://img3.akspic.ru/attachments/crops/0/5/4/9/2/129450/129450-fara-lichnyj_roskoshnyj_avtomobil-reshetka-svet-bmv_m5-1920x1080.jpg') no-repeat center center;
             background-size: cover;
             color: white;
             padding: 100px 0;
+            animation: fadeIn 2s ease-out;
         }
+
+        .hero h1, .hero p {
+            opacity: 0;
+            animation: fadeInUp 1s forwards;
+        }
+
+        .hero h1 {
+            animation-delay: 0.5s;
+        }
+
+        .hero p {
+            animation-delay: 1s;
+        }
+
+        .btn-light {
+            opacity: 0;
+            animation: fadeInUp 1s forwards;
+            animation-delay: 1.5s;
+        }
+
         .advantages {
             margin-top: 50px;
+            animation: slideIn 1.5s ease-out;
         }
-        .card-title {
-            font-size: 1.25rem;
+
+        .advantages .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .advantages .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        /*
+        keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        */
+        .testimonial {
+            background-color: #f1f1f1;
+            padding: 50px 0;
+            margin-top: 50px;
+        }
+
+        .testimonial .quote {
+            font-style: italic;
+            color: #555;
+            font-size: 1.2rem;
+        }
+
+        .testimonial .author {
             font-weight: bold;
+            color: #333;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <header class="hero text-center">
-        <div class="container">
-            <h1 class="display-4">Добро пожаловать в наш автосалон!</h1>
-            <p class="lead">Мы предлагаем широкий выбор немецких автомобилей из-за границы.</p>
-            <a href="#advantages" class="btn btn-light btn-lg mt-4">Узнать наши преимущества</a>
-        </div>
-    </header>
+<header class="hero text-center">
+    <div class="container">
+        <h1 class="display-4">Добро пожаловать в наш автосалон!</h1>
+        <p class="lead">Мы предлагаем широкий выбор немецких автомобилей из-за границы.</p>
+        <a href="#advantages" class="btn btn-light btn-lg mt-4">Узнать наши преимущества</a>
+    </div>
+</header>
 
-    <div class="container advantages" id="advantages">
-        <h2 class="text-center">Наши преимущества</h2>
-        <p></p>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Качество</h5>
-                        <p class="card-text">Мы тщательно отбираем автомобили, чтобы гарантировать их высокое качество и надежность.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Прозрачность</h5>
-                        <p class="card-text">Мы предоставляем полную информацию о каждом автомобиле, включая историю и технические характеристики.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Поддержка клиентов</h5>
-                        <p class="card-text">Наша команда всегда готова помочь вам с выбором и ответить на любые вопросы.</p>
-                    </div>
+<div class="container advantages" id="advantages">
+    <h2 class="text-center">Наши преимущества</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Качество</h5>
+                    <p class="card-text">Мы тщательно отбираем автомобили, чтобы гарантировать их высокое качество и надежность.</p>
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Конкурентные цены</h5>
-                        <p class="card-text">Мы предлагаем лучшие цены на рынке без скрытых платежей.</p>
-                    </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Прозрачность</h5>
+                    <p class="card-text">Мы предоставляем полную информацию о каждом автомобиле, включая историю и технические характеристики.</p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Гарантия</h5>
-                        <p class="card-text">Мы предоставляем гарантию на все автомобили, которые мы продаем.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Удобство</h5>
-                        <p class="card-text">Вы можете заказать автомобиль онлайн, не выходя из дома.</p>
-                    </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Поддержка клиентов</h5>
+                    <p class="card-text">Наша команда всегда готова помочь вам с выбором и ответить на любые вопросы.</p>
                 </div>
             </div>
         </div>
     </div>
-    <footer class="text-center py-4">
-        <p>         </p>
-    </footer>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Конкурентные цены</h5>
+                    <p class="card-text">Мы предлагаем лучшие цены на рынке без скрытых платежей.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Гарантия</h5>
+                    <p class="card-text">Мы предоставляем гарантию на все автомобили, которые мы продаем.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Удобство</h5>
+                    <p class="card-text">Вы можете заказать автомобиль онлайн, не выходя из дома.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container testimonial">
+    <h2 class="text-center">Отзывы наших клиентов</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <blockquote>
+                <p class="quote">"Отличное качество автомобилей! Купил свою мечту через этот автосалон, и не пожалел ни на минуту!"</p>
+                <footer class="author">Иван, Москва</footer>
+            </blockquote>
+        </div>
+        <div class="col-md-6">
+            <blockquote>
+                <p class="quote">"Покупка автомобиля стала легкой и приятной. Все документы и гарантии — в порядке!"</p>
+                <footer class="author">Ольга, Санкт-Петербург</footer>
+            </blockquote>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center py-4">
+    <p>&copy; 2025 Автосалон. Все права защищены.</p>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
